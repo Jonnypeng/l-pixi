@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+		<head>
+				<meta charset="UTF-8">
+				<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+				<title></title>
+				<style>
+						body{
+						margin:0px;
+						}
+						canvas{
+						position:absolute;
+						margin:0px;
+						left:0px;
+						top:0px;
+						width:100%;
+						height:100%;
+						}
+						div#footer {
+						position: absolute;
+						width: 100%;
+						height: 30px;
+						line-height: 30px;
+						text-align: center;
+						bottom: 0px;
+						color: #FFC107;
+						z-index:1;
+						}
+				</style>
+		</head>
+		<body>
+				<div id='footer'>powered by UVCSI</div>
+				<script src="../js/pixi.js"></script>	 
+				<script>
+						var app = new PIXI.Application(640,1030);
+						document.body.appendChild(app.view);
+
+						var graphics = new PIXI.Graphics();
+
+						graphics.beginFill(0xFF3300);
+						graphics.lineStyle(4,0xffd900,1);
+
+						graphics.moveTo(50,50);
+						graphics.lineTo(250,50);
+						graphics.lineTo(100,100);
+						graphics.lineTo(50,50);
+						graphics.endFill();
+
+						graphics.lineStyle(2,0xff1e0,1);
+						graphics.beginFill(0xff1e0,0.25);
+						graphics.drawRoundedRect(50,650,300,300,15);
+
+						graphics.lineStyle(1,0xff1ee,1);
+						graphics.beginFill(0xff1ee,1);
+						graphics.drawRect(50,200,400,400);
+
+						graphics.lineStyle(0);
+						graphics.beginFill(0xFFFF0B,0.5);
+						graphics.drawCircle(200,200,100);
+
+						graphics.lineStyle(1);
+						graphics.beginFill(0xff1ee,1);
+						graphics.drawPolygon(10,10,40,40,50,10,90,10,500,500);
+
+						app.stage.addChild(graphics);
+
+				</script>
+		</body>
+</html>

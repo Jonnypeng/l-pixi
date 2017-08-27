@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+		<head>
+				<meta charset="UTF-8">
+				<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+				<title></title>
+				<style>
+						body{
+						margin:0px;
+						}
+						canvas{
+						position:absolute;
+						margin:0px;
+						left:0px;
+						top:0px;
+						width:100%;
+						height:100%;
+						}
+						div#footer {
+						position: absolute;
+						width: 100%;
+						height: 30px;
+						line-height: 30px;
+						text-align: center;
+						bottom: 0px;
+						color: #FFC107;
+						z-index:1;
+						}
+				</style>
+		</head>
+		<body>
+				<div id='footer'>powered by UVCSI</div>
+				<script src="../js/pixi.js"></script>	 
+				<script>
+						var app = new PIXI.Application(640,1030);
+						document.body.appendChild(app.view);
+
+						var count = 0;
+
+						var ropeLength = 45;
+
+						var points = [];
+
+						for(var i = 0;i<25;i++){
+							points.push(new PIXI.Point(i * ropeLength,0));
+						}
+
+						var strip = new PIXI.mesh.Rope(PIXI.Texture.fromImage('../assets/snake.png'),points);
+
+						strip.x = 40;
+						strip.y = 300;
+
+						app.stage.addChild(strip);
+
+						var g = new PIXI.Graphics();
+						g.x = strip.x;
+						g.y = strip.y;
+						app.stage.addChild(g);
+
+						app.ticker.add(function (){
+							count += 0.1;
+
+							for(var i = 0;i < points.length;i++){
+									points[i].y = Math.sin((i * 0.5) + count)  * 30;
+									points[i].x = i * ropeLength + Math.cos((i * 0.3) + count)*20;
+							}
+							renderPoints();
+						});
+
+						function renderPoints(){
+								g.clear();
+
+								g.lineStyle(2,0xffc2c2);
+								g.moveTo(points[0].x,points[0].y);
+
+								for(var i = 1;i<points.length;i++){
+									g.lineTo(points[i].x,points[i].y);
+								}
+
+								for(var i = 1; i < points.length; i++){
+									g.beginFill(0xff0022);
+									g.drawCircle(points[i].x,points[i].y,10);
+									g.endFill();
+								}
+						};
+
+				</script>
+		</body>
+</html>

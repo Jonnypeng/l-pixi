@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+		<head>
+				<meta charset="UTF-8">
+				<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+				<title></title>
+				<style>
+						body{
+								margin:0px;
+						}
+						canvas{
+								position:absolute;
+								margin:0px;
+								left:0px;
+								top:0px;
+								width:100%;
+								height:100%;
+						}
+						div#footer {
+								position: absolute;
+								width: 100%;
+								height: 30px;
+								line-height: 30px;
+								text-align: center;
+								bottom: 0px;
+								color: #FFC107;
+								z-index:1;
+						}
+				</style>
+		</head>
+		<body>
+				<div id='footer'>powered by UVCSI</div>
+				<script src="../js/pixi.js"></script>	 
+				<script>
+						var app = new PIXI.Application(640,1030);
+						document.body.appendChild(app.view);
+
+						var c = new PIXI.Point(app.renderer.width/2,app.renderer.height/2);
+
+						var graphics = new PIXI.Graphics();
+						graphics.beginFill(0xFF5722,1);
+						graphics.drawCircle(c.x,c.y,150);
+
+						graphics.beginFill(0x00bcd4,0.6);
+						graphics.drawPolygon(c.x - 80,c.y - 80,c.x + 80,c.y,c.x - 80,c.y + 80);
+
+
+						app.stage.addChild(graphics);
+
+						graphics.interactive = true;
+
+						graphics.on('pointertap',play);
+
+
+
+
+						function play(){
+								graphics.destroy();
+								var video = PIXI.Texture.fromVideo('../assets/testVideo.mp4');
+								var av = new PIXI.Sprite(video);
+								app.stage.addChild(av);	
+								av.x = 0;
+								av.y = 0;
+								av.width = app.renderer.width;
+								av.height = app.renderer.height;
+						};
+				</script>
+		</body>
+</html>

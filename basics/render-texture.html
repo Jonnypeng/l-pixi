@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+		<head>
+				<meta charset="UTF-8">
+				<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+				<title></title>
+				<style>
+						body{
+						margin:0px;
+						}
+						canvas{
+						position:absolute;
+						margin:0px;
+						left:0px;
+						top:0px;
+						width:100%;
+						height:100%;
+						}
+						div#footer {
+						position: absolute;
+						width: 100%;
+						height: 30px;
+						line-height: 30px;
+						text-align: center;
+						bottom: 0px;
+						color: #FFC107;
+						z-index:1;
+						}
+				</style>
+		</head>
+		<body>
+				<div id='footer'>powered by UVCSI</div>
+				<script src="../js/pixi.js"></script>	 
+				<script>
+						var app = new PIXI.Application(640,1030);
+						document.body.appendChild(app.view);
+
+						var container = new PIXI.Container();
+						app.stage.addChild(container);
+
+						var texture = PIXI.Texture.fromImage('../assets/basics/bunny.png');
+						
+						for(var i = 0;i<25;i++){
+							var bunny = new PIXI.Sprite(texture);
+							bunny.anchor.set(0.5);
+							bunny.x = (i%5) * 30;
+							bunny.y = Math.floor(i / 5) * 30;
+							container.addChild(bunny);
+						}
+
+						var brt = new PIXI.BaseRenderTexture(640,1030,PIXI.SCALE_MODES.LINEAR,1);
+						var rt = new PIXI.RenderTexture(brt);
+
+						var sprite = new PIXI.Sprite(rt);
+				
+						sprite.x = 200;
+						sprite.y = 0;
+						app.stage.addChild(sprite);
+
+						container.x = app.renderer.width / 2;
+						container.y = app.renderer.height / 2;
+						container.pivot.x = container.width / 2;
+						container.pivot.y = container.height /2 ;
+						container.rotation = 15;
+
+						app.ticker.add(function (){
+							app.renderer.render(container,rt);
+						});
+
+						
+
+
+						
+
+				</script>
+		</body>
+</html>
