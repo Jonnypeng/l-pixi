@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+		<head>
+				<meta charset="UTF-8">
+				<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+				<title></title>
+				<style>
+						body{
+								margin:0px;
+						}
+						canvas{
+								position:absolute;
+								margin:0px;
+								left:0px;
+								top:0px;
+								width:100%;
+								height:100%;
+						}
+						div#footer {
+								position: absolute;
+								width: 100%;
+								height: 30px;
+								line-height: 30px;
+								text-align: center;
+								bottom: 0px;
+								color: #FFC107;
+								z-index:1;
+						}
+				</style>
+		</head>
+		<body>
+				<div id='footer'>powered by UVCSI</div>
+				<script src="../js/pixi.js"></script>	 
+				<script>
+						var app = new PIXI.Application(640,1030);
+						document.body.appendChild(app.view);
+
+						app.loader.add(['../assets/button_test_BG.jpg','../assets/button.png','../assets/buttonDown.png','../assets/buttonOver.png']).load(start);
+
+						function start(){
+								var bg = new PIXI.Sprite.fromImage('../assets/button_test_BG.jpg');
+								bg.width = app.renderer.width;
+								bg.height = app.renderer.height;
+								app.stage.addChild(bg);
+
+								var positions = [];
+								var buttons = [];
+								var rect = new PIXI.Graphics();
+								rect.drawRect(0,0,app.renderer.width,app.renderer.height);
+
+								var button = PIXI.Texture.fromImage('../assets/button.png');
+								var buttonDown = PIXI.Texture.fromImage('../assets/buttonDown.png');
+								var buttonOver = PIXI.Texture.fromImage('../assets/buttonOver.png');
+
+								for(let i = 0;i<5;i++){
+										var point = new PIXI.Point((Math.random()*app.renderer.width),(Math.random()*app.renderer.height));
+										positions.push(point);
+										buttons[i] = new PIXI.Sprite(button);
+										buttons[i].anchor.set(0.5);
+										buttons[i].x = positions[i].x;
+										buttons[i].y = positions[i].y;
+										app.stage.addChild(buttons[i]);
+		
+										buttons[i].interactive = true;
+										buttons[i].buttonMode = true;
+
+										buttons[i].on('pointerover',onButtonOver);
+										buttons[i].on('pointerout',onButtonOut);
+										buttons[i].on('pointerdown',onButtonDown);
+										buttons[i].on('pointerup',onButtonUp);
+										buttons[i].on('pointerupoutside',onButtonUp);
+								}
+
+								function onButtonOver(){
+									this.texture = buttonOver;
+									console.log(1);
+								};
+
+								function onButtonOut(){
+									this.texture = button;
+							};
+
+								function onButtonDown(){
+									this.texture = buttonDown;
+								};
+
+								function onButtonUp(){
+									this.texture = button;
+								};
+						};
+				</script>
+		</body>
+</html>

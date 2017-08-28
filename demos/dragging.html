@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+		<head>
+				<meta charset="UTF-8">
+				<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+				<title></title>
+				<style>
+						body{
+						margin:0px;
+						}
+						canvas{
+						position:absolute;
+						margin:0px;
+						left:0px;
+						top:0px;
+						width:100%;
+						height:100%;
+						}
+						div#footer {
+						position: absolute;
+						width: 100%;
+						height: 30px;
+						line-height: 30px;
+						text-align: center;
+						bottom: 0px;
+						color: #FFC107;
+						z-index:1;
+						}
+				</style>
+		</head>
+		<body>
+				<div id='footer'>powered by UVCSI</div>
+				<script src="../js/pixi.js"></script>	 
+				<script>
+						var app = new PIXI.Application(640,1030,{
+							backgroundColor:0xff1e0
+						});
+						document.body.appendChild(app.view);
+
+						var bunnys = [];
+
+						for(var i = 0;i<8;i++){
+							bunnys[i] = PIXI.Sprite.fromImage('../assets/bunny.png');
+							bunnys[i].anchor.set(0.5);
+							bunnys[i].scale.x = bunnys[i].scale.y = 1.3;
+							bunnys[i].x = Math.random()*app.renderer.width;
+							bunnys[i].y = Math.random()*app.renderer.height;
+							app.stage.addChild(bunnys[i]);
+
+							bunnys[i].interactive = true;
+							
+							bunnys[i].on('pointerdown',dragStart);
+							bunnys[i].on('pointermove',dragMove);
+							bunnys[i].on('pointerup',dragEnd);
+							bunnys[i].on('pointeroutside',dragEnd);
+						}
+
+						function dragStart(event){
+								this.data = event.data;
+								this.alpha = 0.5;
+							this.dragging = true;
+						};
+
+						function dragMove(){
+								if(this.dragging){
+									var newPosition = this.data.getLocalPosition(this.parent);
+									this.x = newPosition.x;
+									this.y = newPosition.y;
+								}
+						};
+
+						function dragEnd(){
+							this.dragging = false;
+							this.alpha = 1;
+							this.data = null;
+						};
+				</script>
+		</body>
+</html>
